@@ -3,6 +3,7 @@ package db
 import (
 	"context"
 	"database/sql"
+	"log"
 	"testing"
 
 	"github.com/tobslob/simple-bank/utils"
@@ -19,7 +20,7 @@ var arg = CreateAccountParams{
 func createRandomAccount(arg CreateAccountParams) Account {
 	account, err := testQueries.CreateAccount(context.Background(), arg)
 	if err != nil {
-		panic("Error while creating account")
+		log.Fatal("Error while creating account:", err)
 	}
 
 	return account
