@@ -30,7 +30,7 @@ func randomString(n int) string {
 
 func RandomCurrency() string {
 	currencies := []string{
-		"NGN", "GPD", "USD", "EUR", "CAD",
+		CAD, EUR, GPD, USD,
 	}
 
 	n := len(currencies)
