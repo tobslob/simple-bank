@@ -10,8 +10,8 @@ import (
 func TestTransferTx(t *testing.T) {
 	store := NewStore(testDb)
 
-	account1 := createRandomAccount(arg)
-	account2 := createRandomAccount(arg)
+	account1 := createRandomAccount(t)
+	account2 := createRandomAccount(t)
 
 	// run n concurrent transfer transaction
 	n := 5
@@ -111,8 +111,8 @@ func TestTransferTx(t *testing.T) {
 func TestTransferTxDeadLock(t *testing.T) {
 	store := NewStore(testDb)
 
-	account1 := createRandomAccount(arg)
-	account2 := createRandomAccount(arg)
+	account1 := createRandomAccount(t)
+	account2 := createRandomAccount(t)
 
 	// run n concurrent transfer transaction
 	n := 10

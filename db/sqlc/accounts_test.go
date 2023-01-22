@@ -11,35 +11,37 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-var arg = CreateAccountParams{
-	Owner:    utils.RandomString(),
-	Balance:  utils.RandomInt(),
-	Currency: utils.RandomCurrency(),
-}
+func createRandomAccount(t *testing.T) Account {
+	user := createRandomUser(t)
 
-func createRandomAccount(arg CreateAccountParams) Account {
-	account, err := testQueries.CreateAccount(context.Background(), arg)
+	var accountArg = CreateAccountParams{
+		Owner:    user.Username,
+		Balance:  utils.RandomInt(),
+		Currency: utils.RandomCurrency(),
+	}
+
+	account, err := testQueries.CreateAccount(context.Background(), accountArg)
 	if err != nil {
 		log.Fatal("Error while creating account:", err)
 	}
+
+	require.NotEmpty(t, account)
+
+	require.Equal(t, accountArg.Balance, account.Balance)
+	require.Equal(t, accountArg.Currency, account.Currency)
+
+	require.NotZero(t, account.ID)
+	require.NotZero(t, account.CreatedAt)
 
 	return account
 }
 
 func TestCreateAccount(t *testing.T) {
-	account := createRandomAccount(arg)
-	require.NotEmpty(t, account)
-
-	require.Equal(t, arg.Balance, account.Balance)
-	require.Equal(t, arg.Currency, account.Currency)
-	require.Equal(t, arg.Owner, account.Owner)
-
-	require.NotZero(t, account.ID)
-	require.NotZero(t, account.CreatedAt)
+	createRandomAccount(t)
 }
 
 func TestGetAccount(t *testing.T) {
-	account1 := createRandomAccount(arg)
+	account1 := createRandomAccount(t)
 	account2, err := testQueries.GetAccount(context.Background(), account1.ID)
 
 	require.NoError(t, err)
@@ -53,7 +55,7 @@ func TestGetAccount(t *testing.T) {
 }
 
 func TestUpdateAccount(t *testing.T) {
-	account1 := createRandomAccount(arg)
+	account1 := createRandomAccount(t)
 
 	updatedArg := UpdateAccountParams{
 		ID:      account1.ID,
@@ -70,7 +72,7 @@ func TestUpdateAccount(t *testing.T) {
 }
 
 func TestDeleteAccount(t *testing.T) {
-	account1 := createRandomAccount(arg)
+	account1 := createRandomAccount(t)
 	err := testQueries.DeleteAccount(context.Background(), account1.ID)
 	require.NoError(t, err)
 
@@ -81,7 +83,7 @@ func TestDeleteAccount(t *testing.T) {
 
 func TestListAccount(t *testing.T) {
 	for i := 0; i < 10; i++ {
-		createRandomAccount(arg)
+		createRandomAccount(t)
 	}
 
 	arg := ListAccountsParams{
