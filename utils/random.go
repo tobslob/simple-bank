@@ -17,7 +17,7 @@ func randomInt(min, max int64) int64 {
 	return min + rand.Int63n(max-min+1)
 }
 
-func randomString(n int) string {
+func GenrateRandomString(n int) string {
 	var sb strings.Builder
 	k := len(alphabet)
 
@@ -42,10 +42,10 @@ func RandomInt() int64 {
 	return randomInt(0, 10000)
 }
 
-func RandomString() string {
-	return randomString(10)
+func RandomOwner() string {
+	return GenrateRandomString(10)
 }
 
 func RandomEmail() string {
-	return fmt.Sprintf("%s@email.com", randomString(6))
+	return fmt.Sprintf("%s@email.com", GenrateRandomString(6))
 }

@@ -104,7 +104,7 @@ func TestGetAccountAPI(t *testing.T) {
 func randomAccount() db.Account {
 	return db.Account{
 		ID:       utils.RandomInt(),
-		Owner:    utils.RandomString(),
+		Owner:    utils.RandomOwner(),
 		Balance:  utils.RandomInt(),
 		Currency: utils.RandomCurrency(),
 	}

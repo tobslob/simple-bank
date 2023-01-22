@@ -174,13 +174,13 @@ func TestCreateUserAPI(t *testing.T) {
 }
 
 func randomUser(t *testing.T) (user db.User, password string) {
-	password = utils.RandomString()
+	password = utils.GenrateRandomString(8)
 	hashpassword, err := utils.HashPassword(password)
 	require.NoError(t, err)
 
 	return db.User{
-		Username:       utils.RandomString(),
-		FullName:       utils.RandomString(),
+		Username:       utils.RandomOwner(),
+		FullName:       utils.RandomOwner(),
 		Email:          utils.RandomEmail(),
 		HashedPassword: hashpassword,
 	}, password
